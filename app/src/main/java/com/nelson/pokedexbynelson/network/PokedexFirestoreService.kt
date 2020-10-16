@@ -1,8 +1,10 @@
 package com.nelson.pokedexbynelson.network
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.nelson.pokedexbynelson.model.Pokemon
 import com.nelson.pokedexbynelson.model.PokemonInfo
+import com.nelson.pokedexbynelson.utils.Resource
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
@@ -10,16 +12,16 @@ import kotlinx.coroutines.tasks.await
 class PokedexFirestoreService @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
-    suspend fun fetchPokemonListFromFirestore() = flow<List<Pokemon>> {
-        try {
-            val data = firestore.collection(POKEMONS).get().await()
-            emit(data.toObjects(Pokemon::class.java))
+
+    suspend fun fetchPokemonListFromFirestore(): List<Pokemon>? {
+        return try {
+            firestore.collection(POKEMONS).get().await().toObjects(Pokemon::class.java)
         } catch (e: Exception) {
-            emit(listOf())
+            null
         }
     }
 
-    suspend fun fetchPokemonInfoFromFirestore(name: String) = flow{
+    suspend fun fetchPokemonInfoFromFirestore(name: String) = flow {
         try {
             val data = firestore.collection(POKEMONS_INFOS).document(name).get().await()
             emit(data.toObject(PokemonInfo::class.java))

@@ -6,6 +6,8 @@ import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 import com.nelson.pokedexbynelson.model.Pokemon
 import com.nelson.pokedexbynelson.ui.adapter.PokemonAdapter
 import com.nelson.pokedexbynelson.ui.main.MainViewModel
+import com.nelson.pokedexbynelson.utils.Resource
+import com.skydoves.whatif.whatIfNotNullAs
 import com.skydoves.whatif.whatIfNotNullOrEmpty
 
 @BindingAdapter("adapter")
@@ -26,8 +28,8 @@ fun paginationPokemonList(view: RecyclerView, viewModel: MainViewModel) {
 }
 
 @BindingAdapter("adapterPokemonList")
-fun bindAdapterPokemonList(view: RecyclerView, pokemonList: List<Pokemon>?) {
-  pokemonList.whatIfNotNullOrEmpty {
+fun bindAdapterPokemonList(view: RecyclerView, pokemonList: Resource<List<Pokemon>>?) {
+  pokemonList.whatIfNotNullAs<List<Pokemon>> {
     (view.adapter as? PokemonAdapter)?.addPokemonList(it)
   }
 }

@@ -8,11 +8,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import com.nelson.pokedexbynelson.base.LiveCoroutinesViewModel
 import com.nelson.pokedexbynelson.model.Pokemon
 import com.nelson.pokedexbynelson.repository.MainRepository
+import com.nelson.pokedexbynelson.utils.Resource
 import timber.log.Timber
 
 class MainViewModel @ViewModelInject constructor(
@@ -21,7 +21,7 @@ class MainViewModel @ViewModelInject constructor(
 ) : LiveCoroutinesViewModel() {
 
   private var pokemonFetchingLiveData: MutableLiveData<Int> = MutableLiveData()
-  val pokemonListLiveData: LiveData<List<Pokemon>>
+  val pokemonListLiveData: LiveData<Resource<List<Pokemon>>>
 
   private val _toastLiveData: MutableLiveData<String> = MutableLiveData()
   val toastLiveData: LiveData<String> get() = _toastLiveData
@@ -34,7 +34,7 @@ class MainViewModel @ViewModelInject constructor(
     pokemonListLiveData = pokemonFetchingLiveData.switchMap {
       isLoading.set(true)
       launchOnViewModelScope {
-        this.mainRepository.fetchPokemonList().asLiveData()
+        this.mainRepository.fetchPokemonList()
       }
     }
   }

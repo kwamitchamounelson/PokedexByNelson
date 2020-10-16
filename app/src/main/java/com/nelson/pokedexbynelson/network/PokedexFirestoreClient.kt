@@ -4,9 +4,11 @@ import javax.inject.Inject
 
 class PokedexFirestoreClient @Inject constructor(
     private val pokedexFirestoreService: PokedexFirestoreService
-) {
-    suspend fun fetchPokemonListFromFirestore(
-    ) = pokedexFirestoreService.fetchPokemonListFromFirestore()
+) : BaseDataSource() {
+
+    suspend fun fetchPokemonListFromFirestore() = getResult {
+        pokedexFirestoreService.fetchPokemonListFromFirestore()
+    }
 
     suspend fun fetchPokemonInfoFromFirestore(
         name: String
