@@ -1,20 +1,5 @@
-/*
- * Designed and developed by 2020 skydoves (Jaewoong Eum)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
-package com.skydoves.pokedex.ui.main
+package com.nelson.pokedexbynelson.ui.main
 
 import androidx.annotation.MainThread
 import androidx.databinding.ObservableBoolean
@@ -25,9 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
-import com.skydoves.pokedex.base.LiveCoroutinesViewModel
-import com.skydoves.pokedex.model.Pokemon
-import com.skydoves.pokedex.repository.MainRepository
+import com.nelson.pokedexbynelson.base.LiveCoroutinesViewModel
+import com.nelson.pokedexbynelson.model.Pokemon
+import com.nelson.pokedexbynelson.repository.MainRepository
 import timber.log.Timber
 
 class MainViewModel @ViewModelInject constructor(
@@ -49,11 +34,7 @@ class MainViewModel @ViewModelInject constructor(
     pokemonListLiveData = pokemonFetchingLiveData.switchMap {
       isLoading.set(true)
       launchOnViewModelScope {
-        this.mainRepository.fetchPokemonList(
-          page = it,
-          onSuccess = { isLoading.set(false) },
-          onError = { _toastLiveData.postValue(it) }
-        ).asLiveData()
+        this.mainRepository.fetchPokemonList().asLiveData()
       }
     }
   }

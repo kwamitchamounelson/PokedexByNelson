@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.skydoves.pokedex.model
+package com.nelson.pokedexbynelson.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.skydoves.pokedex.base
+package com.nelson.pokedexbynelson.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
